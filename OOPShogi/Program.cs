@@ -10,6 +10,11 @@ namespace OOPShogi
     {
         static void Main(string[] args)
         {
+            Shogi shogi = new Shogi();
+            shogi.Init();
+            shogi.StartMatch();
+
+            Console.Read();
         }
     }
 }
