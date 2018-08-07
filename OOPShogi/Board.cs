@@ -17,7 +17,8 @@ namespace OOPShogi
         {
             CheckIfCoordIsPositive(coord);
             kSize = coord;
-            _pieceList = new List<BPiece>(coord.row * coord.col);
+            _pieceList = Enumerable.Repeat<BPiece>(null, coord.row * coord.col)
+                                   .ToList();
             _pieceCoordMap = new Dictionary<BPiece, Coord>();
         }
 
@@ -28,7 +29,7 @@ namespace OOPShogi
         }
 
         // overwrite is not allowed
-        public bool SetPiece(Coord coord, BPiece piece){
+        public bool SetPiece(BPiece piece, Coord coord){
             CheckIfCoordIsOnBoard(coord);
             if (GetPiece(coord) != null)
             {
@@ -139,7 +140,14 @@ namespace OOPShogi
                 Trace.TraceError($"couldn't drop {piece} to {dropTo}");
                 Environment.Exit(1);
             }
-            SetPiece(dropTo, piece);
+            SetPiece(piece, dropTo);
+        }
+
+        public bool CanPromote(BPiece piece, Coord from, Coord to)
+        {
+            return piece.CanPromote() &&
+                        (IsWithinOpponentsField(piece.IsWhite, from) ||
+                         IsWithinOpponentsField(piece.IsWhite, to));
         }
 
         private bool IsEmptyBetween(Coord from, Coord to)
@@ -233,6 +241,18 @@ namespace OOPShogi
             if(GetPiece(coord) == null){
                 Trace.TraceError($"couldn't find a piece for {coord}");
                 onFailure();
+            }
+        }
+
+        private bool IsWithinOpponentsField(bool isWhite, Coord coord){
+            CheckIfCoordIsOnBoard(coord);
+            if (isWhite)
+            {
+                return coord.row < kSize.row / 3;
+            }
+            else
+            {
+                return coord.row >= kSize.row - kSize.row / 3;
             }
         }
     }
