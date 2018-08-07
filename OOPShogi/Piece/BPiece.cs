@@ -15,25 +15,17 @@ namespace OOPShogi.Piece
 
     public abstract class BPiece
     {
-        private EPieceSort _sort;
-        private bool _isPromoted;
+        public EPieceSort Sort { get; private set; }
+        public bool IsPromoted { get; private set; }
+        public readonly bool IsWhite;
+        public bool CanJump { get; private set; }
 
-        public EPieceSort Sort
-        {
-            get { return _sort; }
-            private set { _sort = value; }
-        }
-
-        public bool IsPromoted
-        {
-            get { return _isPromoted; }
-            private set { _isPromoted = value; }
-       }
-
-        public BPiece(EPieceSort sort)
+        public BPiece(EPieceSort sort, bool canJump, bool isWhite)
         {
             Sort = sort;
             IsPromoted = false;
+            CanJump = canJump;
+            IsWhite = isWhite;
         }
 
         public virtual bool CanPromote()
@@ -41,11 +33,25 @@ namespace OOPShogi.Piece
             return !IsPromoted;
         }
 
-        public void Promote(){
+        public virtual void Promote(){
             IsPromoted = true;
         }
 
-        public abstract bool HasControl(Coord to);
+        public abstract bool HasControlTo(Coord coord);
 
-    }
+        protected bool IsInsideGoldControl(Coord coord){
+            return Coord.ManhattanDistance(coord) == 1 &&
+                        coord != new Coord(1, 1)       &&
+                        coord != new Coord(1, -1);
+        }
+
+        protected Coord Forward(){
+            if (IsWhite) return Coord.UnitRow * -1;
+            else return Coord.UnitRow;
+        }
+        protected Coord Right(){
+            if (IsWhite) return Coord.UnitCol;
+            else return Coord.UnitCol * -1;
+        }
+	}
 }

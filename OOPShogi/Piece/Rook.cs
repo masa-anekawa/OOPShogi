@@ -3,23 +3,20 @@ namespace OOPShogi.Piece
 {
     public class Rook: BPiece
     {
-        public Rook(EPieceSort sort) : base(sort)
-        {
-        }
+        public Rook(bool isWhite) : base(EPieceSort.kRook, false, isWhite) {}
 
 		public override bool CanPromote()
 		{
             return base.CanPromote();
 		}
 
-		public override bool HasControl(Coord to)
+        public override bool HasControlTo(Coord coord)
 		{
-            if (to == Coord.Zero) return false;
-
-            if (IsPromoted && Coord.ManhattanDistance(Coord.Zero, to) == 1)
+            if (coord == Coord.Zero) return false;
+            if (IsPromoted && Coord.ManhattanDistance(coord) == 1)
                 return true;
 
-            return to.row == 0 || to.col == 0;
+            return coord.row == 0 || coord.col == 0;
 		}
 	}
 }
