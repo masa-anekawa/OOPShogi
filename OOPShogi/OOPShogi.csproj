@@ -45,6 +45,7 @@
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.3.10.1\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -57,6 +58,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Piece\PieceFactory.cs" />
     <Compile Include="Piece\King.cs" />
+    <Compile Include="Piece\Knight.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
