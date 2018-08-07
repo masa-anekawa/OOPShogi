@@ -34,8 +34,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MyClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Piece\BPieceTest.cs" />
+    <Compile Include="Piece\KingTest.cs" />
+    <Compile Include="Piece\RookTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -45,6 +47,9 @@
       <Project>{6BACF1D0-6516-4A06-B44F-167C5FD1DBBB}</Project>
       <Name>OOPShogi</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Piece\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
