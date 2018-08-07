@@ -59,6 +59,12 @@
     <Compile Include="Piece\PieceFactory.cs" />
     <Compile Include="Piece\King.cs" />
     <Compile Include="Piece\Knight.cs" />
+    <Compile Include="TextRenderer.cs" />
+    <Compile Include="Piece\Gold.cs" />
+    <Compile Include="Piece\Porn.cs" />
+    <Compile Include="Piece\Lance.cs" />
+    <Compile Include="Piece\Silver.cs" />
+    <Compile Include="Piece\Bishop.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
