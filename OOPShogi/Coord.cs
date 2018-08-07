@@ -13,9 +13,13 @@ namespace OOPShogi
             col = c;
         }
 
-        public bool IsWithin(Coord other)
+        public bool IsLessThan(Coord other)
         {
-            return this.row <= other.row && this.col <= other.col;
+            return this.row < other.row && this.col < other.col;
+        }
+
+        public bool IsGreaterThanOrEqualTo(Coord other){
+            return this.row >= other.row && this.col >= other.col;
         }
 
         public override String ToString()
@@ -25,10 +29,18 @@ namespace OOPShogi
 
         public static int ManhattanDistance(Coord from, Coord to)
         {
-            return Math.Abs(from.row - to.row)
-                       + Math.Abs(from.col - to.col);
+            return Math.Abs(to.row - from.row) +
+                       Math.Abs(to.col - from.col);
         }
-        public static int ManhattanDistance(Coord to) => ManhattanDistance(Coord.Zero, to);
+        public static int ManhattanDistance(Coord to)
+            => ManhattanDistance(Coord.Zero, to);
+
+        public static int EightNeighborDistance(Coord from, Coord to){
+            return Math.Max(Math.Abs(to.row - from.row),
+                            Math.Abs(to.col - from.col));
+        }
+        public static int EightNeighborDistance(Coord to)
+            => EightNeighborDistance(Coord.Zero, to);
 
         public static readonly Coord Zero = new Coord(0, 0);
         public static readonly Coord UnitRow = new Coord(1, 0);
@@ -62,6 +74,13 @@ namespace OOPShogi
         public static Coord operator +(Coord lhs, Coord rhs)
         {
             return new Coord(lhs.row + rhs.row, lhs.col + rhs.col);
+        }
+
+        public static Coord operator -(Coord lhs, Coord rhs){
+            return new Coord(lhs.row - rhs.row, lhs.col - rhs.col);
+        }
+        public static Coord operator -(Coord lhs){
+            return new Coord(-lhs.row, -lhs.col);
         }
     }
 }
