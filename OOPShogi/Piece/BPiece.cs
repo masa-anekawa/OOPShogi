@@ -31,7 +31,6 @@ namespace OOPShogi.Piece
             return "BPiece: " + base.ToString();
 		}
 
-
 		public virtual bool CanPromote()
         {
             return !IsPromoted;
@@ -42,8 +41,9 @@ namespace OOPShogi.Piece
             return false;
         }
 
-        public abstract bool HasControlTo(Coord coord);
-
+        public virtual bool HasControlTo(Coord coord){
+            return coord != Coord.Zero;
+        }
 
         public void Promote()
         {

@@ -5,11 +5,6 @@ namespace OOPShogi.Piece
     {
         public Knight(bool isWhite): base(EPieceSort.kKnight, isWhite){}
 
-		public override bool CanPromote()
-		{
-            return base.CanPromote();
-		}
-
 		public override bool CanJump()
 		{
             return !IsPromoted;
@@ -17,6 +12,8 @@ namespace OOPShogi.Piece
 
 		public override bool HasControlTo(Coord coord)
 		{
+            if (!base.HasControlTo(coord)) return false;
+
             if (!IsPromoted)
                 return coord == (Forward * 2 + Right) ||
                        coord == (Forward * 2 + Left);

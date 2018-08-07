@@ -12,6 +12,8 @@ namespace OOPShogi.Piece
 
         public override bool HasControlTo(Coord coord)
 		{
+            if (!base.HasControlTo(coord)) return false;
+
             return Coord.EightNeighborDistance(coord) == 1;
 		}
 	}
