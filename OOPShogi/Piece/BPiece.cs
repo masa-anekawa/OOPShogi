@@ -18,40 +18,55 @@ namespace OOPShogi.Piece
         public EPieceSort Sort { get; private set; }
         public bool IsPromoted { get; private set; }
         public readonly bool IsWhite;
-        public bool CanJump { get; private set; }
 
-        public BPiece(EPieceSort sort, bool canJump, bool isWhite)
+        public BPiece(EPieceSort sort, bool isWhite)
         {
             Sort = sort;
             IsPromoted = false;
-            CanJump = canJump;
             IsWhite = isWhite;
         }
 
-        public virtual bool CanPromote()
+		public override string ToString()
+		{
+            return "BPiece: " + base.ToString();
+		}
+
+
+		public virtual bool CanPromote()
         {
             return !IsPromoted;
         }
 
-        public virtual void Promote(){
-            IsPromoted = true;
+        public virtual bool CanJump()
+        {
+            return false;
         }
 
         public abstract bool HasControlTo(Coord coord);
 
-        protected bool IsInsideGoldControl(Coord coord){
-            return Coord.ManhattanDistance(coord) == 1 &&
-                        coord != new Coord(1, 1)       &&
-                        coord != new Coord(1, -1);
+
+        public void Promote()
+        {
+            IsPromoted = true;
         }
 
-        protected Coord Forward(){
-            if (IsWhite) return Coord.UnitRow * -1;
-            else return Coord.UnitRow;
+        protected bool IsInsideGoldControl(Coord coord){
+            return Coord.EightNeighborDistance(coord) == 1 &&
+                        coord != (Backward + Right)        &&
+                        coord != (Backward + Left);
         }
-        protected Coord Right(){
-            if (IsWhite) return Coord.UnitCol;
-            else return Coord.UnitCol * -1;
+
+        protected Coord Forward{
+            get { return Coord.UnitRow * (IsWhite ? -1 : 1); }
+        }
+        protected Coord Backward{
+            get { return Forward * -1; }
+        }
+        protected Coord Right{
+            get { return Coord.UnitCol * (IsWhite ? 1 : -1); }
+        }
+        protected Coord Left{
+            get { return Right * -1; }
         }
 	}
 }

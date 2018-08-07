@@ -3,7 +3,7 @@ namespace OOPShogi.Piece
 {
     public class King: BPiece
     {
-        public King(bool isWhite) : base(EPieceSort.kKing, false, isWhite) {}
+        public King(bool isWhite) : base(EPieceSort.kKing, isWhite) {}
 
 		public override bool CanPromote()
 		{
@@ -12,7 +12,7 @@ namespace OOPShogi.Piece
 
         public override bool HasControlTo(Coord coord)
 		{
-            return Coord.ManhattanDistance(coord) == 1;
+            return Coord.EightNeighborDistance(coord) == 1;
 		}
 	}
 }
