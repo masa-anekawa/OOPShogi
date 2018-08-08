@@ -29,15 +29,21 @@ namespace OOPShogi
 
         public static int ManhattanDistance(Coord from, Coord to)
         {
-            return Math.Abs(to.row - from.row) +
-                       Math.Abs(to.col - from.col);
+            checked
+            {
+                return Math.Abs(to.row - from.row) +
+                           Math.Abs(to.col - from.col);
+            }
         }
         public static int ManhattanDistance(Coord to)
             => ManhattanDistance(Coord.Zero, to);
 
         public static int EightNeighborDistance(Coord from, Coord to){
-            return Math.Max(Math.Abs(to.row - from.row),
-                            Math.Abs(to.col - from.col));
+            checked
+            {
+                return Math.Max(Math.Abs(to.row - from.row),
+                                Math.Abs(to.col - from.col));
+            }
         }
         public static int EightNeighborDistance(Coord to)
             => EightNeighborDistance(Coord.Zero, to);
