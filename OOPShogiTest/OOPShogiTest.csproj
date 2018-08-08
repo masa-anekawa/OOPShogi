@@ -44,6 +44,7 @@
     <Compile Include="Piece\SilverTest.cs" />
     <Compile Include="Piece\GoldTest.cs" />
     <Compile Include="Piece\BishopTest.cs" />
+    <Compile Include="CoordTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
