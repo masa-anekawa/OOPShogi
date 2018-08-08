@@ -28,7 +28,10 @@ namespace OOPShogi.Piece
 
 		public override string ToString()
 		{
-            return "BPiece: " + base.ToString();
+            return "[BPiece: " +
+                (IsPromoted ? "Promoted" : "Non-Promoted") + " " +
+                (IsWhite ? "White" : "Black") + " " +
+                Sort + "]";
 		}
 
 		public virtual bool CanPromote()
