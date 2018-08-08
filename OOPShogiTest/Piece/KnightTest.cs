@@ -28,7 +28,7 @@ namespace OOPShogiTest.Piece
         public void NG_NonPromotedKnightShouldNotHaveNearControl(
             [Range(-1, 1)]int row,
             [Range(-1, 1)]int col,
-            [Values(true, false)]bool isWhite)
+            [Values] bool isWhite)
         {
             var piece = MakePiece(EPieceSort.kKnight, isWhite);
             Assert.IsFalse(piece.HasControlTo(new Coord(row, col)),
@@ -83,7 +83,7 @@ namespace OOPShogiTest.Piece
         [TestCase(1, -1, false)]
         [TestCase(1, 0, false)]
         [TestCase(1, 1, false)]
-        public void OK_PromotedKnightHasGoldControl(int row, int col, bool isWhite)
+        public void OK_PromotedKnightShouldHaveGoldControl(int row, int col, bool isWhite)
         {
             var piece = MakePiece(EPieceSort.kKnight, isWhite);
             piece.Promote();
@@ -127,7 +127,7 @@ namespace OOPShogiTest.Piece
         [TestCase(2, 0, false)]
         [TestCase(2, 1, false)]
         [TestCase(2, -2, false)]
-        public void NG_PromotedKnightHasGoldControl(int row, int col, bool isWhite)
+        public void NG_PromotedKnightShouldHaveGoldControl(int row, int col, bool isWhite)
         {
             var piece = MakePiece(EPieceSort.kKnight, isWhite);
             piece.Promote();

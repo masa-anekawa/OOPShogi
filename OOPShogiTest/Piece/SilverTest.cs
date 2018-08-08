@@ -9,38 +9,37 @@ using NUnit.Framework;
 namespace OOPShogiTest.Piece
 {
     [TestFixture]
-    public class PornTest
+    public class SilverTest
     {
-        [Test]
-        public void OK_NonPromotedPornShouldHaveForwardControl(
-            [Values] bool isWhite)
+        [TestCase(-1, -1, true)]
+        [TestCase(-1, 0, true)]
+        [TestCase(-1, 1, true)]
+        [TestCase(1, -1, true)]
+        [TestCase(1, 1, true)]
+        [TestCase(-1, -1, false)]
+        [TestCase(-1, 1, false)]
+        [TestCase(1, -1, false)]
+        [TestCase(1, 0, false)]
+        [TestCase(1, 1, false)]
+        public void OK_NonPromotedSilverShouldHaveSilverControl(
+            int row, int col, bool isWhite)
         {
-            var piece = MakePiece(EPieceSort.kPorn, isWhite);
-            Coord expected = new Coord((isWhite ? -1 : 1), 0);
+            var piece = MakePiece(EPieceSort.kSilver, isWhite);
+            Coord expected = new Coord(row, col);
             Assert.IsTrue(piece.HasControlTo(expected),
                           $"{piece} shold have control to {expected}");
         }
 
-        [TestCase(-1, -1, true)]
-        [TestCase(-1, 1, true)]
         [TestCase(0, -1, true)]
-        [TestCase(0, 0, true)]
         [TestCase(0, 1, true)]
-        [TestCase(1, -1, true)]
         [TestCase(1, 0, true)]
-        [TestCase(1, 1, true)]
-        [TestCase(-1, -1, false)]
         [TestCase(-1, 0, false)]
-        [TestCase(-1, 1, false)]
         [TestCase(0, -1, false)]
-        [TestCase(0, 0, false)]
         [TestCase(0, 1, false)]
-        [TestCase(1, -1, false)]
-        [TestCase(1, 1, false)]
-        public void NG_NonPromotedPornShouldHaveForwardControl(
+        public void NG_NonPromotedSilverShouldHaveSilverControl(
             int row, int col, bool isWhite)
         {
-            var piece = MakePiece(EPieceSort.kPorn, isWhite);
+            var piece = MakePiece(EPieceSort.kSilver, isWhite);
             Assert.IsFalse(piece.HasControlTo(new Coord(row, col)),
                            $"{piece} should not have control to ${new Coord(row, col)}");
         }
@@ -57,9 +56,9 @@ namespace OOPShogiTest.Piece
         [TestCase(1, -1, false)]
         [TestCase(1, 0, false)]
         [TestCase(1, 1, false)]
-        public void OK_PromotedPornShouldHaveGoldControl(int row, int col, bool isWhite)
+        public void OK_PromotedSilverShouldHaveGoldControl(int row, int col, bool isWhite)
         {
-            var piece = MakePiece(EPieceSort.kPorn, isWhite);
+            var piece = MakePiece(EPieceSort.kSilver, isWhite);
             piece.Promote();
             Assert.IsTrue(piece.HasControlTo(new Coord(row, col)),
             $"{piece} should have control to ${new Coord(row, col)}");
@@ -101,9 +100,9 @@ namespace OOPShogiTest.Piece
         [TestCase(2, 0, false)]
         [TestCase(2, 1, false)]
         [TestCase(2, -2, false)]
-        public void NG_PromotedPornShouldHaveGoldControl(int row, int col, bool isWhite)
+        public void NG_PromotedSilverShouldHaveGoldControl(int row, int col, bool isWhite)
         {
-            var piece = MakePiece(EPieceSort.kPorn, isWhite);
+            var piece = MakePiece(EPieceSort.kSilver, isWhite);
             piece.Promote();
             Assert.IsFalse(piece.HasControlTo(new Coord(row, col)),
                            $"{piece} should not have control to ${new Coord(row, col)}");

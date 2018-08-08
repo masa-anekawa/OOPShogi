@@ -103,5 +103,87 @@ namespace OOPShogiTest.Piece
             Assert.IsFalse(piece.HasControlTo(Coord.Zero),
                            $"{piece} should not have control to itself");
         }
+
+        [Test]
+        public void NG_SomePiecesShouldNotHaveFarControl_Top(
+            [Values(
+                EPieceSort.kPorn,
+                EPieceSort.kSilver,
+                EPieceSort.kGold,
+                EPieceSort.kKing)] EPieceSort sort,
+            [Range(-3, -2)]int row,
+            [Range(-3, 3)]int col,
+            [Values] bool isWhite,
+            [Values] bool doPromote)
+        {
+            var piece = MakePiece(sort, isWhite);
+            if (doPromote) piece.Promote();
+            Assert.IsFalse(piece.HasControlTo(new Coord(row, col)),
+                           $"{piece} should not have control to ${new Coord(row, col)}");
+        }
+
+        [Test]
+        public void NG_SomePiecesShouldNotHaveFarControl_Bottom(
+            [Values(
+                EPieceSort.kPorn,
+                EPieceSort.kSilver,
+                EPieceSort.kGold,
+                EPieceSort.kKing)] EPieceSort sort,
+            [Range(2, 3)]int row,
+            [Range(-3, 3)]int col,
+            [Values] bool isWhite,
+            [Values] bool doPromote)
+        {
+            var piece = MakePiece(sort, isWhite);
+            if (doPromote) piece.Promote();
+            Assert.IsFalse(piece.HasControlTo(new Coord(row, col)),
+                           $"{piece} should not have control to ${new Coord(row, col)}");
+        }
+
+        [Test]
+        public void NG_SomePiecesShouldNotHaveFarControl_Left(
+            [Values(
+                EPieceSort.kPorn,
+                EPieceSort.kSilver,
+                EPieceSort.kGold,
+                EPieceSort.kKing)] EPieceSort sort,
+            [Range(-1, 1)]int row,
+            [Range(-3, -2)]int col,
+            [Values] bool isWhite,
+            [Values] bool doPromote)
+        {
+            var piece = MakePiece(sort, isWhite);
+            if (doPromote) piece.Promote();
+            Assert.IsFalse(piece.HasControlTo(new Coord(row, col)),
+                           $"{piece} should not have control to ${new Coord(row, col)}");
+        }
+
+        [Test]
+        public void NG_SomePiecesShouldNotHaveFarControl_Right(
+            [Values(
+                EPieceSort.kPorn,
+                EPieceSort.kSilver,
+                EPieceSort.kGold,
+                EPieceSort.kKing)] EPieceSort sort,
+            [Range(-1, 1)] int row,
+            [Range(2, 3)] int col,
+            [Values] bool isWhite,
+            [Values] bool doPromote)
+        {
+            var piece = MakePiece(sort, isWhite);
+            if (doPromote) piece.Promote();
+            Assert.IsFalse(piece.HasControlTo(new Coord(row, col)),
+                           $"{piece} should not have control to ${new Coord(row, col)}");
+        }
+
+        [Test]
+        public void OK_EveryPieceShouldBeNonPromotedAtFirst(
+            [Values] EPieceSort sort,
+            [Values] bool isWhtie
+        )
+        {
+            BPiece piece = MakePiece(sort, isWhtie);
+            Assert.IsFalse(piece.IsPromoted, "Every piece should not be non-promoted at first");
+        }
     }
 }

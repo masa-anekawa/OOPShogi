@@ -19,7 +19,7 @@ namespace OOPShogiTest.Piece
         [TestCase(1, -1)]
         [TestCase(1, 0)]
         [TestCase(1, -1)]
-        public void OK_WhiteKingHasControlTo(int row, int col)
+        public void OK_WhiteKingShouldHaveControlTo(int row, int col)
         {
             var piece = MakePiece(EPieceSort.kKing, true);
             Assert.IsTrue(piece.HasControlTo(new Coord(row, col)),
@@ -43,7 +43,7 @@ namespace OOPShogiTest.Piece
         [TestCase(2, 0)]
         [TestCase(2, 1)]
         [TestCase(2, 2)]
-        public void NG_WhiteKingDoNotHaveControlTo(int row, int col)
+        public void NG_WhiteKingShouldNotHaveControlTo(int row, int col)
         {
             var piece = MakePiece(EPieceSort.kKing, true);
             Assert.IsFalse(piece.HasControlTo(new Coord(row, col)),
@@ -58,7 +58,7 @@ namespace OOPShogiTest.Piece
         [TestCase(1, -1)]
         [TestCase(1, 0)]
         [TestCase(1, -1)]
-        public void OK_BlackKingHasControlTo(int row, int col)
+        public void OK_BlackKingShouldHaveControlTo(int row, int col)
         {
             var piece = MakePiece(EPieceSort.kKing, false);
             Assert.IsTrue(piece.HasControlTo(new Coord(row, col)),
@@ -82,7 +82,7 @@ namespace OOPShogiTest.Piece
         [TestCase(2, 0)]
         [TestCase(2, 1)]
         [TestCase(2, 2)]
-        public void NG_BlackKingDoNotHaveControlTo(int row, int col)
+        public void NG_BlackKingShouldNotHaveControlTo(int row, int col)
         {
             var piece = MakePiece(EPieceSort.kKing, false);
             Assert.IsFalse(piece.HasControlTo(new Coord(row, col)),

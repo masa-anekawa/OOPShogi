@@ -41,6 +41,9 @@
     <Compile Include="Piece\PornTest.cs" />
     <Compile Include="Piece\LanceTest.cs" />
     <Compile Include="Piece\KnightTest.cs" />
+    <Compile Include="Piece\SilverTest.cs" />
+    <Compile Include="Piece\GoldTest.cs" />
+    <Compile Include="Piece\BishopTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

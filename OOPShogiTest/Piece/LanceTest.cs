@@ -12,7 +12,7 @@ namespace OOPShogiTest.Piece
     public class LanceTest
     {
         [Test]
-        public void OK_NonPromotedWhiteLanceHasStraightControl(
+        public void OK_NonPromotedWhiteLanceShouldHaveStraightControl(
             [Range(-9, -1)]int row)
         {
             var piece = MakePiece(EPieceSort.kLance, true);
@@ -21,7 +21,7 @@ namespace OOPShogiTest.Piece
                           $"{piece} shold have control to {coord}");
         }
         [Test]
-        public void OK_NonPromotedBlackLanceHasStraightControl(
+        public void OK_NonPromotedBlackLanceShouldHaveStraightControl(
             [Range(1, 9)]int row)
         {
             var piece = MakePiece(EPieceSort.kLance, false);
@@ -103,7 +103,7 @@ namespace OOPShogiTest.Piece
         [TestCase(1, -1, false)]
         [TestCase(1, 0, false)]
         [TestCase(1, 1, false)]
-        public void OK_PromotedLanceHasGoldControl(int row, int col, bool isWhite)
+        public void OK_PromotedLanceShouldHaveGoldControl(int row, int col, bool isWhite)
         {
             var piece = MakePiece(EPieceSort.kLance, isWhite);
             piece.Promote();
@@ -148,7 +148,7 @@ namespace OOPShogiTest.Piece
         [TestCase(2, 0, false)]
         [TestCase(2, 1, false)]
         [TestCase(2, -2, false)]
-        public void NG_PromotedLanceHasGoldControl(int row, int col, bool isWhite)
+        public void NG_PromotedLanceShouldHaveGoldControl(int row, int col, bool isWhite)
         {
             var piece = MakePiece(EPieceSort.kLance, isWhite);
             piece.Promote();
