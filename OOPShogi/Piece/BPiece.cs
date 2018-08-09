@@ -10,16 +10,16 @@ namespace OOPShogi.Piece
         kSilver,
         kKnight,
         kLance,
-        kPorn
+        kPorn,
     }
 
     public abstract class BPiece
     {
         public EPieceSort Sort { get; private set; }
         public bool IsPromoted { get; private set; }
-        public readonly bool IsWhite;
+        public bool IsWhite { get; private set; }
 
-        public BPiece(EPieceSort sort, bool isWhite)
+        protected BPiece(EPieceSort sort, bool isWhite)
         {
             Sort = sort;
             IsPromoted = false;
@@ -51,6 +51,10 @@ namespace OOPShogi.Piece
         public void Promote()
         {
             IsPromoted = true;
+        }
+
+        public void Betray(){
+            IsWhite = !IsWhite;
         }
 
         protected bool IsInsideGoldControl(Coord coord){
