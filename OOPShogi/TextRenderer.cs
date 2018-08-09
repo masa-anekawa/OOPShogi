@@ -18,7 +18,24 @@ namespace OOPShogi
             _textWriter = textWriter;
         }
 
-        public void RenderBoard(Board board){
+        public void RenderPosition(IPosition position){
+            RenderPool(position.GetPool(false));
+            RenderBoard(position.GetBoard());
+            RenderPool(position.GetPool(true));
+            RenderTurn(position.GetTurn());
+        }
+
+        public void Write(string s)
+        {
+            _textWriter.Write(s);
+        }
+
+        public void WriteLine(string s)
+        {
+            _textWriter.WriteLine(s);
+        }
+
+        private void RenderBoard(Board board){
             if(board == null){
                 Trace.TraceError("board is null");
                 Exit(1);
@@ -38,7 +55,18 @@ namespace OOPShogi
             RenderHorizontalLine(col * 2 + (col + 1));
         }
 
-        public void RenderPiece(BPiece piece){
+        private void RenderPool(Pool pool)
+        {
+            // TODO
+            _textWriter.WriteLine($"RenderPool({pool}) called.");
+        }
+
+        private void RenderTurn(Turn turn){
+            // TODO
+            _textWriter.WriteLine($"RenderTurn({turn}) called.");
+        }
+
+        private void RenderPiece(BPiece piece){
             if (piece == null)
             {
                 Write("..");
@@ -76,12 +104,6 @@ namespace OOPShogi
             }
         }
 
-        private void Write(string s){
-            _textWriter.Write(s);
-        }
-        private void WriteLine(string s){
-            _textWriter.WriteLine(s);
-        }
         private void RenderHorizontalLine(int count){
             string str = "-";
             for (int i = 1; i < count; i++)
