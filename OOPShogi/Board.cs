@@ -10,8 +10,8 @@ namespace OOPShogi
     public class Board
     {
         public readonly Coord kSize;
-        private List<BPiece> _pieceList;
-        private Dictionary<BPiece, Coord> _pieceCoordMap;
+        private IList<BPiece> _pieceList;
+        private IDictionary<BPiece, Coord> _pieceCoordMap;
 
         public Board(Coord coord)
         {
@@ -22,46 +22,133 @@ namespace OOPShogi
             _pieceCoordMap = new Dictionary<BPiece, Coord>();
         }
 
-        // may return null
+        /// <summary>
+        /// Gets the piece by coordinate.
+        /// Returns null if the table is empty for the coordinate.
+        /// </summary>
+        /// <returns>The piece.</returns>
+        /// <param name="coord">Coordinate.</param>
         public BPiece GetPiece(Coord coord){
             CheckIfCoordIsOnBoard(coord);
             return _pieceList[CalcPiecesIndex(coord)];
         }
 
+        /// <summary>
+        /// Gets the coordinate by piece.
+        /// </summary>
+        /// <returns>The coordinate.</returns>
+        /// <param name="piece">Piece.</param>
+        public Coord GetCoord(BPiece piece)
+        {
+            CheckIfMapContains(piece);
+            return _pieceCoordMap[piece];
+        }
+
+        /// <summary>
+        /// Moves the specified piece.
+        /// </summary>
+        /// <returns>Taken piece, if this move takes.</returns>
+        /// <param name="piece">Piece that is moved.</param>
+        /// <param name="to">Coordinate the piece is moved to.</param>
+        public BPiece Move(BPiece piece, Coord to)
+        {
+            if (!IsMovable(piece, to))
+            {
+                Trace.TraceError($"board cannnot move {piece} from {GetCoord(piece)} to {to}");
+                Environment.Exit(1);
+            }
+
+            BPiece toPiece = GetPiece(to);
+            if (toPiece != null)
+            {
+                // this move takes a opponent's piece.
+                Debug.Assert(toPiece.IsWhite != piece.IsWhite);
+                RemovePieceByCoord(GetCoord(toPiece));
+                RemoveCoordByPiece(toPiece);
+            }
+            RemovePieceByCoord(GetCoord(piece));
+            RemoveCoordByPiece(piece);
+            SetCoordByPiece(piece, to);
+            SetPieceByCoord(piece, to);
+            return toPiece;
+        }
+
+        /// <summary>
+        /// Drop the piece to specified coordinate.
+        /// </summary>
+        /// <param name="piece">Piece that is dropped.</param>
+        /// <param name="dropTo">where the piece is dropped.</param>
+        public void Drop(BPiece piece, Coord dropTo)
+        {
+            if (!IsDropable(piece, dropTo))
+            {
+                Trace.TraceError($"couldn't drop {piece} to {dropTo}");
+                Environment.Exit(1);
+            }
+            SetPieceByCoord(piece, dropTo);
+            SetCoordByPiece(piece, dropTo);
+        }
+
+        /// <summary>
+        /// Checks if the piece can promote,
+        /// including information about the board and the piece.
+        /// </summary>
+        /// <returns><c>true</c>, if promote was caned, <c>false</c> otherwise.</returns>
+        /// <param name="piece">Piece.</param>
+        /// <param name="from">From.</param>
+        /// <param name="to">To.</param>
+        public bool CanPromote(BPiece piece, Coord from, Coord to)
+        {
+            return piece.CanPromote() &&
+                        (IsWithinOpponentsField(piece.IsWhite, from) ||
+                         IsWithinOpponentsField(piece.IsWhite, to));
+        }
+
         // overwrite is not allowed
-        public bool SetPiece(BPiece piece, Coord coord){
+        private bool SetPieceByCoord(BPiece piece, Coord coord){
             CheckIfCoordIsOnBoard(coord);
             if (GetPiece(coord) != null)
             {
                 Trace.TraceError($"error: Board{coord} is already occupied.");
                 return false;
             }
-			CheckIfMapIsEmptyFor(piece);
-            _pieceCoordMap.Add(piece, coord);
             _pieceList[CalcPiecesIndex(coord)] = piece;
             return true;
         }
 
-        // returned value is non-nullable
-        public Coord GetCoord(BPiece piece){
-            CheckIfMapContains(piece);
-            return _pieceCoordMap[piece];
+        private bool RemovePieceByCoord(Coord coord){
+            if (GetPiece(coord) == null)
+                return false;
+            else
+            {
+                _pieceList[CalcPiecesIndex(coord)] = null;
+                return true;
+            }
         }
 
         // overwrite is not allowed
-        public bool SetCoord(BPiece piece, Coord coord){
+        private bool SetCoordByPiece(BPiece piece, Coord coord){
             CheckIfCoordIsOnBoard(coord);
             CheckIfMapIsEmptyFor(piece);
             _pieceCoordMap.Add(piece, coord);
             return true;
         }
 
+        private bool RemoveCoordByPiece(BPiece piece){
+            if (!_pieceCoordMap.ContainsKey(piece))
+                return false;
+            else{
+                _pieceCoordMap.Remove(piece);
+                return true;
+            }
+        }
+
         // move *your* peice
-        public bool IsMovable(
+        private bool IsMovable(
             BPiece piece, Coord to, bool isDrop, Coord? dropTo){
             if (piece == null) return false;
 
-            // used for tell onFailure() is called in CheckIf funcitons
+            // failFlag is used for tell onFailure() is called in CheckIf funcitons
 			bool failFlag = false;
 
             Coord from;
@@ -97,7 +184,8 @@ namespace OOPShogi
 
             return true;
         }
-        public bool IsMovable(Coord from, Coord to){
+
+        private bool IsMovable(Coord from, Coord to){
             bool failFlag = false;
             CheckIfCoordIsOnBoard(from, () => failFlag = true);
             CheckIfPieceListIsNotNullFor(from, () => failFlag = true);
@@ -105,18 +193,11 @@ namespace OOPShogi
 
             return IsMovable(GetPiece(from), to, false, null); 
         }
-        public bool IsMovable(BPiece piece, Coord to)
+
+        private bool IsMovable(BPiece piece, Coord to)
             => IsMovable(piece, to, false, null);
 
-        public void Move(BPiece piece, Coord to){
-            if (!IsMovable(piece, to)){
-                Trace.TraceError($"board cannnot move {piece} from {GetCoord(piece)} to {to}");
-                Environment.Exit(1);
-            }
-            // TODO
-        }
-
-        public bool IsDropable(BPiece piece, Coord dropTo){
+        private bool IsDropable(BPiece piece, Coord dropTo){
             bool failFlag = false;
             CheckIfCoordIsOnBoard(dropTo, () => failFlag = true);
             if (failFlag) return false;
@@ -134,21 +215,6 @@ namespace OOPShogi
             return false;
         }
 
-        public void Drop(BPiece piece, Coord dropTo){
-            if (!IsDropable(piece, dropTo))
-            {
-                Trace.TraceError($"couldn't drop {piece} to {dropTo}");
-                Environment.Exit(1);
-            }
-            SetPiece(piece, dropTo);
-        }
-
-        public bool CanPromote(BPiece piece, Coord from, Coord to)
-        {
-            return piece.CanPromote() &&
-                        (IsWithinOpponentsField(piece.IsWhite, from) ||
-                         IsWithinOpponentsField(piece.IsWhite, to));
-        }
 
         private bool IsEmptyBetween(Coord from, Coord to)
         {
