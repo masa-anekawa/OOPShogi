@@ -65,6 +65,12 @@
     <Compile Include="Piece\Lance.cs" />
     <Compile Include="Piece\Silver.cs" />
     <Compile Include="Piece\Bishop.cs" />
+    <Compile Include="Pool.cs" />
+    <Compile Include="Move.cs" />
+    <Compile Include="TextCommander.cs" />
+    <Compile Include="Command.cs" />
+    <Compile Include="IPosition.cs" />
+    <Compile Include="Turn.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
