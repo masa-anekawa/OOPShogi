@@ -10,9 +10,11 @@ namespace OOPShogi
     {
         static void Main(string[] args)
         {
-            Shogi shogi = new Shogi();
-            shogi.Init();
-            shogi.StartMatch();
+            Player you = new Player("Masa", true);
+            Player ai = new Player("Ponanza", false);
+            Match match = new Match(you, ai);
+            match.Init();
+            match.StartMatch();
 
             Console.Read();
         }
