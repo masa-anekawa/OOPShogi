@@ -16,27 +16,27 @@ namespace OOPShogi.Piece
     public abstract class BPiece
     {
         public EPieceSort Sort { get; private set; }
-        public bool IsPromoted { get; private set; }
-        public bool IsWhite { get; private set; }
+        public bool Promoted { get; private set; }
+        public bool White { get; private set; }
 
         protected BPiece(EPieceSort sort, bool isWhite)
         {
             Sort = sort;
-            IsPromoted = false;
-            IsWhite = isWhite;
+            Promoted = false;
+            White = isWhite;
         }
 
 		public override string ToString()
 		{
             return "[BPiece: " +
-                (IsPromoted ? "Promoted" : "Non-Promoted") + " " +
-                (IsWhite ? "White" : "Black") + " " +
+                (Promoted ? "Promoted" : "Non-Promoted") + " " +
+                (White ? "White" : "Black") + " " +
                 Sort + "]";
 		}
 
 		public virtual bool CanPromote()
         {
-            return !IsPromoted;
+            return !Promoted;
         }
 
         public virtual bool CanJump()
@@ -50,11 +50,12 @@ namespace OOPShogi.Piece
 
         public void Promote()
         {
-            IsPromoted = true;
+            Promoted = true;
         }
 
-        public void Betray(){
-            IsWhite = !IsWhite;
+        public void PrepareToBeTaken(){
+            White = !White;
+            Promoted = false;
         }
 
         protected bool IsInsideGoldControl(Coord coord){
@@ -64,13 +65,13 @@ namespace OOPShogi.Piece
         }
 
         protected Coord Forward{
-            get { return Coord.UnitRow * (IsWhite ? -1 : 1); }
+            get { return Coord.UnitRow * (White ? -1 : 1); }
         }
         protected Coord Backward{
             get { return Forward * -1; }
         }
         protected Coord Right{
-            get { return Coord.UnitCol * (IsWhite ? 1 : -1); }
+            get { return Coord.UnitCol * (White ? 1 : -1); }
         }
         protected Coord Left{
             get { return Right * -1; }
