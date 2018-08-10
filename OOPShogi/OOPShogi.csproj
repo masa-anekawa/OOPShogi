@@ -54,7 +54,7 @@
     <Compile Include="Coord.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="Player.cs" />
-    <Compile Include="Shogi.cs" />
+    <Compile Include="Match.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Piece\PieceFactory.cs" />
     <Compile Include="Piece\King.cs" />
@@ -71,6 +71,10 @@
     <Compile Include="Command.cs" />
     <Compile Include="IPosition.cs" />
     <Compile Include="Turn.cs" />
+    <Compile Include="History.cs" />
+    <Compile Include="HistoryEvent.cs" />
+    <Compile Include="IRenderer.cs" />
+    <Compile Include="ICommander.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
