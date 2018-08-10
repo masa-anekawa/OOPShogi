@@ -3,13 +3,13 @@ namespace OOPShogi
 {
     public class Player
     {
-        public bool IsWhite { get; private set; }
-        public String Name{ get; private set; }
+        public String Name{ get; }
+        public bool IsHuman { get; }
 
-        public Player(bool isWhite, String name)
+        public Player(String _name, bool _isHuman)
         {
-            IsWhite = isWhite;
-            Name = name;
+            Name = _name;
+            IsHuman = _isHuman;
 		}
     }
 }
