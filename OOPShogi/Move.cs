@@ -5,28 +5,39 @@ using OOPShogi.Piece;
 namespace OOPShogi
 {
     /// <summary>
-    /// 着手．生成時点で常に合法手であることが保証されている．
+    /// Move.
     /// </summary>
-    public class Move
+    public struct Move
     {
-        public BPiece piece;
+        public EPieceSort sort;
+        public Coord from;
         public Coord to;
-        public bool isWhite;
+        public bool white;
         public bool doPromote;
-        public int index;
+        public bool doDrop;
 
         public Move(
-            BPiece _piece,
+            EPieceSort _pieceSort,
+            Coord _from,
             Coord _to,
-            bool _isWhite,
+            bool _white,
             bool _doPromote,
-            int _index)
+            bool _doDrop)
         {
-            piece = _piece;
+            sort = _pieceSort;
+            from = _from;
             to = _to;
-            isWhite = _isWhite;
+            white = _white;
             doPromote = _doPromote;
-            index = _index;
+            doDrop = _doDrop;
+        }
+
+        public override string ToString()
+        {
+            if (doDrop)
+                return $"[Move: Drop {(white ? "White" : "Black")} {sort} to {to}]";
+            else
+                return $"[Move: Move {(white ? "White" : "Black")} {sort} from {from} to {to}";
         }
     }
 }
