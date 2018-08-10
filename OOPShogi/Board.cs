@@ -17,7 +17,7 @@ namespace OOPShogi
         {
             CheckIfCoordIsPositive(coord);
             kSize = coord;
-            _pieceList = Enumerable.Repeat<BPiece>(null, coord.row * coord.col)
+            _pieceList = Enumerable.Repeat<BPiece>(null, coord.Row * coord.Col)
                                    .ToList();
             _pieceCoordMap = new Dictionary<BPiece, Coord>();
         }
@@ -62,7 +62,7 @@ namespace OOPShogi
             if (toPiece != null)
             {
                 // this move takes a opponent's piece.
-                Debug.Assert(toPiece.IsWhite != piece.IsWhite);
+                Debug.Assert(toPiece.White != piece.White);
                 RemovePieceByCoord(GetCoord(toPiece));
                 RemoveCoordByPiece(toPiece);
             }
@@ -100,8 +100,8 @@ namespace OOPShogi
         public bool CanPromote(BPiece piece, Coord from, Coord to)
         {
             return piece.CanPromote() &&
-                        (IsWithinOpponentsField(piece.IsWhite, from) ||
-                         IsWithinOpponentsField(piece.IsWhite, to));
+                        (IsWithinOpponentsField(piece.White, from) ||
+                         IsWithinOpponentsField(piece.White, to));
         }
 
         // overwrite is not allowed
@@ -174,10 +174,10 @@ namespace OOPShogi
             if (!piece.HasControlTo(to - from))
                 return false;
             // cannot move onto your piece
-            if (GetPiece(to) != null && GetPiece(to).IsWhite == piece.IsWhite)
+            if (GetPiece(to) != null && GetPiece(to).White == piece.White)
                 return false;
             // cannot move over pieces, except for non-promoted knight
-            if ((from.row == to.row || from.col == to.col) &&
+            if ((from.Row == to.Row || from.Col == to.Col) &&
                 !piece.CanJump() &&
                 !this.IsEmptyBetween(from, to))
                 return false;
@@ -203,9 +203,9 @@ namespace OOPShogi
             if (failFlag) return false;
 
             // TODO: Optimization
-            foreach (int i in Enumerable.Range(0, kSize.row))
+            foreach (int i in Enumerable.Range(0, kSize.Row))
             {
-                foreach (int j in Enumerable.Range(0, kSize.col))
+                foreach (int j in Enumerable.Range(0, kSize.Col))
                 {
                     if (IsMovable(piece, new Coord(i, j), true, dropTo) &&
                        GetPiece(dropTo) == null)
@@ -221,24 +221,24 @@ namespace OOPShogi
             CheckIfCoordIsOnBoard(from);
             CheckIfCoordIsOnBoard(to);
 
-            if (from.row == to.row)
+            if (from.Row == to.Row)
             {
-                for (int col = Math.Min(from.col, to.col) + 1;
-                     col < Math.Max(from.col, to.col);
+                for (int col = Math.Min(from.Col, to.Col) + 1;
+                     col < Math.Max(from.Col, to.Col);
                      ++col)
                 {
-                    if (GetPiece(new Coord(from.row, col)) != null)
+                    if (GetPiece(new Coord(from.Row, col)) != null)
                         return false;
                 }
                 return true;
             }
-            else if (from.col == to.col)
+            else if (from.Col == to.Col)
             {
-                for (int row = Math.Min(from.row, to.row) + 1;
-                     row < Math.Max(from.row, to.row);
+                for (int row = Math.Min(from.Row, to.Row) + 1;
+                     row < Math.Max(from.Row, to.Row);
                      ++row)
                 {
-                    if (GetPiece(new Coord(row, from.col)) != null)
+                    if (GetPiece(new Coord(row, from.Col)) != null)
                         return false;
                 }
                 return true;
@@ -252,7 +252,7 @@ namespace OOPShogi
         }
 
         private int CalcPiecesIndex(Coord coord){
-            return coord.row * kSize.col + coord.col;
+            return coord.Row * kSize.Col + coord.Col;
         }
 
         private Action defaultOnFailure = () => Environment.Exit(1);
@@ -286,7 +286,7 @@ namespace OOPShogi
         private void CheckIfCoordIsNonNegative(Coord coord, Action onFailure = null)
         {
             if (onFailure == null) onFailure = defaultOnFailure;
-            if (coord.row < 0 || coord.col < 0)
+            if (coord.Row < 0 || coord.Col < 0)
             {
                 Trace.TraceError($"Either row or col of {coord} is negative");
                 onFailure();
@@ -295,7 +295,7 @@ namespace OOPShogi
         private void CheckIfCoordIsPositive(Coord coord, Action onFailure = null)
         {
             if (onFailure == null) onFailure = defaultOnFailure;
-            if (coord.row <= 0 || coord.col <= 0)
+            if (coord.Row <= 0 || coord.Col <= 0)
             {
                 Trace.TraceError($"Either row or col of {coord} is non-positive");
                 onFailure();
@@ -314,11 +314,11 @@ namespace OOPShogi
             CheckIfCoordIsOnBoard(coord);
             if (isWhite)
             {
-                return coord.row < kSize.row / 3;
+                return coord.Row < kSize.Row / 3;
             }
             else
             {
-                return coord.row >= kSize.row - kSize.row / 3;
+                return coord.Row >= kSize.Row - kSize.Row / 3;
             }
         }
     }

@@ -10,7 +10,7 @@ using OOPShogi.Piece;
 
 namespace OOPShogi
 {
-    public class TextRenderer
+    public class TextRenderer: IRenderer
     {
         private readonly TextWriter _textWriter;
 
@@ -40,8 +40,8 @@ namespace OOPShogi
                 Trace.TraceError("board is null");
                 Exit(1);
             }
-            int row = board.kSize.row;
-            int col = board.kSize.col;
+            int row = board.kSize.Row;
+            int col = board.kSize.Col;
             foreach (var i in Range(0, row))
             {
                 RenderHorizontalLine(col * 2 + (col + 1));
@@ -57,12 +57,12 @@ namespace OOPShogi
 
         private void RenderPool(Pool pool)
         {
-            // TODO
+            // TODO: RenderPoolの実装
             _textWriter.WriteLine($"RenderPool({pool}) called.");
         }
 
         private void RenderTurn(Turn turn){
-            // TODO
+            // TODO: RenderTurnの実装
             _textWriter.WriteLine($"RenderTurn({turn}) called.");
         }
 
@@ -73,33 +73,33 @@ namespace OOPShogi
                 return;
             }
 
-            if (piece.IsPromoted) Write("!");
+            if (piece.Promoted) Write("!");
             else                  Write(".");
 
             switch(piece.Sort){
                 case EPieceSort.kKing:
-                    Write((piece.IsWhite ? "K" : "k"));
+                    Write((piece.White ? "K" : "k"));
                     break;
                 case EPieceSort.kRook:
-                    Write((piece.IsWhite ? "R" : "r"));
+                    Write((piece.White ? "R" : "r"));
                     break;
                 case EPieceSort.kBishop:
-                    Write((piece.IsWhite ? "B" : "b"));
+                    Write((piece.White ? "B" : "b"));
                     break;
                 case EPieceSort.kGold:
-                    Write((piece.IsWhite ? "G" : "g"));
+                    Write((piece.White ? "G" : "g"));
                     break;
                 case EPieceSort.kSilver:
-                    Write((piece.IsWhite ? "S" : "s"));
+                    Write((piece.White ? "S" : "s"));
                     break;
                 case EPieceSort.kKnight:
-                    Write((piece.IsWhite ? "N" : "n"));
+                    Write((piece.White ? "N" : "n"));
                     break;
                 case EPieceSort.kLance:
-                    Write((piece.IsWhite ? "L" : "l"));
+                    Write((piece.White ? "L" : "l"));
                     break;
                 case EPieceSort.kPorn:
-                    Write((piece.IsWhite ? "P" : "p"));
+                    Write((piece.White ? "P" : "p"));
                     break;
             }
         }

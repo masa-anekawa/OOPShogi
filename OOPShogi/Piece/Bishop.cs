@@ -9,10 +9,10 @@ namespace OOPShogi.Piece
 		{
             if (!base.HasControlTo(coord)) return false;
 
-            if (IsPromoted && Coord.EightNeighborDistance(coord) == 1)
+            if (Promoted && Coord.EightNeighborDistance(coord) == 1)
                 return true;
             else
-                return Math.Abs(coord.row) == Math.Abs(coord.col);
+                return Math.Abs(coord.Row) == Math.Abs(coord.Col);
 		}
 	}
 }

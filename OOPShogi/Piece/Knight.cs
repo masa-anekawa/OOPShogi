@@ -7,14 +7,14 @@ namespace OOPShogi.Piece
 
 		public override bool CanJump()
 		{
-            return !IsPromoted;
+            return !Promoted;
 		}
 
 		public override bool HasControlTo(Coord coord)
 		{
             if (!base.HasControlTo(coord)) return false;
 
-            if (!IsPromoted)
+            if (!Promoted)
                 return coord == (Forward * 2 + Right) ||
                        coord == (Forward * 2 + Left);
             else

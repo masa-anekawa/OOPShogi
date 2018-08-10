@@ -9,7 +9,7 @@ namespace OOPShogi.Piece
 		{
             if (!base.HasControlTo(coord)) return false;
 
-            if (!IsPromoted)
+            if (!Promoted)
                 return coord == Forward;
             else
                 return IsInsideGoldControl(coord);

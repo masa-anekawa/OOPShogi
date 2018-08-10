@@ -183,7 +183,7 @@ namespace OOPShogiTest.Piece
         )
         {
             BPiece piece = MakePiece(sort, isWhtie);
-            Assert.IsFalse(piece.IsPromoted, "Every piece should not be non-promoted at first");
+            Assert.IsFalse(piece.Promoted, "Every piece should not be non-promoted at first");
         }
     }
 }

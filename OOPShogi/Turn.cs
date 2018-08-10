@@ -2,19 +2,19 @@
 {
     public class Turn
     {
-        public bool IsWhite { get; private set; }
+        public bool White { get; private set; }
 
         public Turn(bool isWhite = true){
-            IsWhite = isWhite;
+            White = isWhite;
         }
 
         public void Switch(){
-            IsWhite = !IsWhite;
+            White = !White;
         }
 
         public override string ToString()
         {
-            return $"[Turn: {(IsWhite ? "White" : "Black")}]";
+            return $"[Turn: {(White ? "White" : "Black")}]";
         }
     }
 }

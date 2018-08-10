@@ -5,34 +5,34 @@ namespace OOPShogi
 {
     public struct Coord
     {
-        public readonly int row, col;
+        public readonly int Row, Col;
 
         public Coord(int r, int c)
         {
-            row = r;
-            col = c;
+            Row = r;
+            Col = c;
         }
 
         public bool IsLessThan(Coord other)
         {
-            return this.row < other.row && this.col < other.col;
+            return this.Row < other.Row && this.Col < other.Col;
         }
 
         public bool IsGreaterThanOrEqualTo(Coord other){
-            return this.row >= other.row && this.col >= other.col;
+            return this.Row >= other.Row && this.Col >= other.Col;
         }
 
         public override String ToString()
         {
-            return $"[{this.row}, {this.col}]";
+            return $"[{this.Row}, {this.Col}]";
         }
 
         public static int ManhattanDistance(Coord from, Coord to)
         {
             checked
             {
-                return Math.Abs(to.row - from.row) +
-                           Math.Abs(to.col - from.col);
+                return Math.Abs(to.Row - from.Row) +
+                           Math.Abs(to.Col - from.Col);
             }
         }
         public static int ManhattanDistance(Coord to)
@@ -41,8 +41,8 @@ namespace OOPShogi
         public static int EightNeighborDistance(Coord from, Coord to){
             checked
             {
-                return Math.Max(Math.Abs(to.row - from.row),
-                                Math.Abs(to.col - from.col));
+                return Math.Max(Math.Abs(to.Row - from.Row),
+                                Math.Abs(to.Col - from.Col));
             }
         }
         public static int EightNeighborDistance(Coord to)
@@ -57,36 +57,36 @@ namespace OOPShogi
             if (obj == null) return false;
             var coord = (Coord)obj;
             if (coord == null) return false;
-            else return coord.row == this.row && coord.col == this.col;
+            else return coord.Row == this.Row && coord.Col == this.Col;
         }
         public bool Equals(Coord other)
         {
             if (other == null) return false;
-            else return this.row == other.row && this.col == other.col;
+            else return this.Row == other.Row && this.Col == other.Col;
         }
         public override int GetHashCode()
         {
-            return row ^ col;
+            return Row ^ Col;
         }
         public static bool operator ==(Coord lhs, Coord rhs) => Equals(lhs, rhs);
         public static bool operator !=(Coord lhs, Coord rhs) => !(lhs == rhs);
 
         public static Coord operator *(Coord lhs, int rhs)
         {
-            return new Coord(lhs.row * rhs, lhs.col * rhs);
+            return new Coord(lhs.Row * rhs, lhs.Col * rhs);
         }
         public static Coord operator *(int lhs, Coord rhs) => rhs * lhs;
 
         public static Coord operator +(Coord lhs, Coord rhs)
         {
-            return new Coord(lhs.row + rhs.row, lhs.col + rhs.col);
+            return new Coord(lhs.Row + rhs.Row, lhs.Col + rhs.Col);
         }
 
         public static Coord operator -(Coord lhs, Coord rhs){
-            return new Coord(lhs.row - rhs.row, lhs.col - rhs.col);
+            return new Coord(lhs.Row - rhs.Row, lhs.Col - rhs.Col);
         }
         public static Coord operator -(Coord lhs){
-            return new Coord(-lhs.row, -lhs.col);
+            return new Coord(-lhs.Row, -lhs.Col);
         }
     }
 }

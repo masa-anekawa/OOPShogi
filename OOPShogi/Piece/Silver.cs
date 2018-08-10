@@ -9,7 +9,7 @@ namespace OOPShogi.Piece
 		{
             if (!base.HasControlTo(coord)) return false;
 
-            if (!IsPromoted)
+            if (!Promoted)
                 return Coord.EightNeighborDistance(coord) == 1
                             && coord != Right
                             && coord != Left
